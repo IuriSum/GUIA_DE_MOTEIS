@@ -7,8 +7,6 @@ class ApiService {
 
   ApiService();
 
-  
-
   // Method to perform a GET request
   Future<Map<String, dynamic>> fetchData() async {
     try {
@@ -27,7 +25,9 @@ class ApiService {
         }
       }
     } catch(e){
-      return e as Map<String, dynamic>;
+      return {
+        "error" : "$e"
+      };
     }
   }
 }

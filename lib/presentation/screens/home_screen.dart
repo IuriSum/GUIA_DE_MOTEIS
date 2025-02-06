@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:guia_de_moteis/data/api/api_service.dart';
 import 'package:guia_de_moteis/presentation/colors/colors.dart';
 
-class _HomeScreenState extends State<HomeScreen> {
+final apiServiceProvider = Provider<ApiService>((ref) {
+  return ApiService();
+});
+
+final dataProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+  final apiService = ref.read(apiServiceProvider);
+  return apiService.fetchData();
+});
+
+class HomeScreen extends ConsumerWidget {
+  const HomeScreen({super.key});
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final dataAsync = ref.watch(dataProvider);
+
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -36,31 +51,40 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(height: 40),
-            Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColors.accentColor1, // Use the first accent color
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                'Accent Box',
-                style: TextStyle(
-                  color: Colors.white, // Contrasting text color
-                  fontSize: 16,
-                ),
-              ),
+            dataAsync.when(
+              loading: () => CircularProgressIndicator(),
+              error: (error, stack) => Text('Error: $error'),
+              data: (data) {
+                if (data.containsKey("error")) {
+                  return Text('Error: ${data["error"]}');
+                }
+                return Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.accentColor1, // Use the first accent color
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    'Data: ${data.toString()}',
+                    style: TextStyle(
+                      color: Colors.white, // Contrasting text color
+                      fontSize: 16,
+                    ),
+                  ),
+                );
+              },
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Add button functionality here
+                ref.refresh(dataProvider);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.accentColor2, // Use the second accent color
                 padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
               child: Text(
-                'Click Me',
+                'Refresh Data',
                 style: TextStyle(
                   color: Colors.white, // Contrasting text color
                   fontSize: 16,
@@ -87,11 +111,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
 }
