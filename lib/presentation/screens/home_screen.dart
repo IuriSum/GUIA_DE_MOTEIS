@@ -87,21 +87,6 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      // bottomNavigationBar: BottomAppBar(
-      //   color: AppColors.headerFooterColor2, // Use the second header/footer color
-      //   child: Container(
-      //     height: 60,
-      //     child: Center(
-      //       child: Text(
-      //         'Footer',
-      //         style: TextStyle(
-      //           color: Colors.white, // Contrasting text color
-      //           fontSize: 16,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

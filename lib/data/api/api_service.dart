@@ -13,20 +13,18 @@ class ApiService {
       final response = await http.get(Uri.parse(baseUrl));
       
       if (response.statusCode == 200) {
-        return jsonDecode(response.body) as Map<String, dynamic>;
-      } 
-      else {
-        final backupRespone = await http.get(Uri.parse(baseUrl));
-        if (backupRespone.statusCode == 200) {
-          return jsonDecode(response.body) as Map<String, dynamic>;
-        }
-        else{
-          throw Exception('Failed to load data: ${response.statusCode}');
+        return jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+      } else {
+        final backupResponse = await http.get(Uri.parse(secondUrl));
+        if (backupResponse.statusCode == 200) {
+          return jsonDecode(utf8.decode(backupResponse.bodyBytes)) as Map<String, dynamic>;
+        } else {
+          throw Exception('Failed to load data: ${backupResponse.statusCode}');
         }
       }
-    } catch(e){
+    } catch (e) {
       return {
-        "error" : "$e"
+        "error": "$e"
       };
     }
   }
