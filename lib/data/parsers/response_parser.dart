@@ -24,7 +24,7 @@ class ResponseParserService {
       if(!responseJson["data"].containsKey("moteis")){
         throw Exception("No motels found");
       }
-
+      // Prevencao de deep copy
       List<Map<String, dynamic>> motels = List<Map<String, dynamic>>.from(responseJson["data"]['moteis']);
       
       if(qtdPorPagina > 0 && pagina > 0){
