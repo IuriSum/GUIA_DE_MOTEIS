@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:guia_de_moteis/data/api/api_service.dart';
+import 'package:guia_de_moteis/data/parsers/response_parser.dart';
 import 'package:guia_de_moteis/presentation/colors/colors.dart';
 
 final apiServiceProvider = Provider<ApiService>((ref) {
@@ -58,6 +59,7 @@ class HomeScreen extends ConsumerWidget {
                 if (data.containsKey("error")) {
                   return Text('Error: ${data["error"]}');
                 }
+                List<Map<String, dynamic>> motels = ResponseParserService(responseJson: data).getMotels();
                 return Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -65,7 +67,7 @@ class HomeScreen extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    'Data: ${data.toString()}',
+                    motels.toString(),
                     style: TextStyle(
                       color: Colors.white, // Contrasting text color
                       fontSize: 16,
