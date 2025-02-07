@@ -36,7 +36,7 @@ class SuiteWidget extends StatelessWidget {
                         periodo.tempoFormatado,
                         style: TextStyle(
                           fontFamily: "Roboto",
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                           fontSize: 12,
                           color: AppColors.primaryTextColor
                         ),
@@ -50,7 +50,7 @@ class SuiteWidget extends StatelessWidget {
                         "  •  R\$ ${doubleToRealFormat(periodo.valor)}",
                         style: TextStyle(
                           fontFamily: "Roboto",
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.w500,
                           fontSize: 12,
                           color: AppColors.primaryTextColor
                         ),
@@ -59,19 +59,31 @@ class SuiteWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                padding: EdgeInsets.only(right: 10),
-                child: Text(
-                  (suite.qtd > 0 && suite.exibirQtdDisponiveis) ? "Disponíveis: ${suite.qtd}" : "Indisponível",
-                  style: TextStyle(
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: AppColors.primaryTextColor
-                  ),
-                ),
-              )
+              Column(
+                  children: suite.periodos.map((periodo) => 
+                    Text(
+                      (periodo.desconto??0.0) > 0.0 ? 
+                      "R\$ ${doubleToRealFormat(periodo.desconto!)} OFF disponível!" : "-",
+                      style: TextStyle(
+                        fontFamily: "Roboto",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        color: AppColors.primaryTextColor
+                      ),
+                    )
+                  ).toList()
+                )
             ],
+          ),
+          SizedBox(height: 10),
+          Text(
+            (suite.qtd > 0 && suite.exibirQtdDisponiveis) ? "Suítes disponíveis: ${suite.qtd}" : "",
+            style: TextStyle(
+              fontFamily: "Roboto",
+              fontWeight: FontWeight.w600,
+              fontSize: 14,
+              color: AppColors.primaryTextColor
+            ),
           ),
           SizedBox(height: 10),
           ClipRRect(

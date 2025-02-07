@@ -102,7 +102,7 @@ class _MotelWidgetState extends State<MotelWidget> {
           SizedBox(height: 10),
           ConstrainedBox(
             constraints: BoxConstraints(
-              maxHeight: 420
+              maxHeight: 450
             ),
             child: PageView.builder(
               controller: _pageController,
