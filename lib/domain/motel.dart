@@ -14,13 +14,15 @@ class Motel {
   int get qtdAvaliacoes => _data['qtdAvaliacoes'] ?? 0;
   double get media => _data['media']?.toDouble() ?? 0.0;
 
+  factory Motel.fromJson(Map<String, dynamic> json) {
+    return Motel(json: json);
+  }
+
   @override
   String toString() {
     return 'Motel{fantasia: $fantasia, logo: $logo, bairro: $bairro, distancia: $distancia, qtdFavoritos: $qtdFavoritos, suites: $suites, qtdAvaliacoes: $qtdAvaliacoes, media: $media}';
   }
 }
-
-
 
 // class Item {
 //   final Map<String, dynamic> _data;
@@ -56,8 +58,6 @@ class Motel {
 //     return CategoriaItem(json: json);
 //   }
 // }
-
-
 
 // class Desconto {
 //   final Map<String, dynamic> _data;
