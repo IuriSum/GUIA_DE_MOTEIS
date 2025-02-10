@@ -54,9 +54,9 @@ class _MotelWidgetState extends State<MotelWidget> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: CachedNetworkImage(imageUrl: motel.logo, width: 50, height: 50),
+                      child: CachedNetworkImage(imageUrl: motel.logo, width: 40, height: 40),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 4),
                     Text(motel.fantasia,
                       style: TextStyle(
                         fontFamily: "Roboto",
@@ -83,7 +83,7 @@ class _MotelWidgetState extends State<MotelWidget> {
                       itemSize: 15.0,
                       direction: Axis.horizontal,
                     ),
-                    SizedBox(width: 5,),
+                    SizedBox(width: 4,),
                     Text(
                       "${motel.media}",
                       style: TextStyle(
